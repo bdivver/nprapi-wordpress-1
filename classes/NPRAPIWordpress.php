@@ -103,6 +103,7 @@ class NPRAPIWordpress extends NPRAPI {
 			$pull_post_type = 'post';
 		}
 		$use_npr_layout = ( !empty( get_option( 'dp_npr_query_use_layout' ) ) ? TRUE : FALSE );
+        $use_npr_featured = ( !empty( get_option( 'dp_npr_query_use_featured' ) ) ? TRUE : FALSE );
 
 		$post_id = null;
 
@@ -149,6 +150,12 @@ class NPRAPIWordpress extends NPRAPI {
 				$npr_layout = $this->get_body_with_layout( $story, $use_npr_layout );
 				if ( !empty( $npr_layout['body'] ) ) {
 					$story->body = $npr_layout['body'];
+
+					//if remove lead image true.  Using Featured image instead
+					if ($use_npr_featured == TRUE){
+						preg_replace("/<img[^>]+\>/i", "", $story->body, 1);
+					}
+					
 					$npr_has_layout = $npr_layout['has_layout'];
 					$npr_has_video = $npr_layout['has_video'];
 				}
