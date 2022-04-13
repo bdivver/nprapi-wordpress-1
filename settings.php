@@ -119,6 +119,8 @@ function nprstory_settings_init() {
 	add_settings_field( 'dp_npr_query_use_layout', 'Use rich layout on pulled posts if available', 'nprstory_query_use_layout_callback', 'ds_npr_api_get_multi_settings', 'ds_npr_api_get_multi_settings' );
 	register_setting( 'ds_npr_api_get_multi_settings', 'dp_npr_query_use_layout' , 'nprstory_validation_callback_checkbox');
 
+	add_settings_field( 'dp_npr_query_use_featured', 'Theme uses Featured Image, so remove lead image from rich layout on pulled posts if available', 'nprstory_query_use_layout_callback', 'ds_npr_api_get_multi_settings', 'ds_npr_api_get_multi_settings' );
+	register_setting( 'ds_npr_api_get_multi_settings', 'dp_npr_query_use_featured' , 'nprstory_validation_callback_checkbox');
 
 	add_settings_field( 'ds_npr_pull_post_type', 'NPR Pull Post Type', 'nprstory_pull_post_type_callback', 'ds_npr_api', 'ds_npr_api_settings' );
 	register_setting( 'ds_npr_api', 'ds_npr_pull_post_type', 'nprstory_validation_callback_select' );
@@ -194,6 +196,19 @@ function nprstory_query_multi_cron_interval_callback() {
 	$option = get_option( 'dp_npr_query_multi_cron_interval' );
 	echo nprstory_esc_html( "<input type='number' value='$option' name='dp_npr_query_multi_cron_interval' id='dp_npr_query_multi_cron_interval' /> <p> How often, in minutes, should the Get Multi function run?  (default = 60)" );
 	wp_nonce_field( 'nprstory_nonce_ds_npr_query_multi_cron_interval', 'nprstory_nonce_ds_npr_query_multi_cron_interval_name', true, true );
+}
+
+function nprstory_query_use_featured_callback() {
+	$use_layout = get_option( 'dp_npr_query_use_feature' );
+	$check_box_string = '<input id="dp_npr_query_use_feature" name="dp_npr_query_use_feature" type="checkbox" value="true"';
+
+	if ( $use_layout ) {
+		$check_box_string .= ' checked="checked" ';
+	}
+	$check_box_string .= "/>";
+
+	echo nprstory_esc_html( $check_box_string . "<p>If your theme uses the featured image, checking this box will remove the lead image from imported posts with more complex HTML to render</p>" );
+	wp_nonce_field( 'nprstory_nonce_ds_npr_query_use_feature', 'nprstory_nonce_ds_npr_query_use_feature_name', true, true );
 }
 
 function nprstory_api_query_publish_callback( $i ) {
