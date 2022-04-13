@@ -104,7 +104,7 @@ class NPRAPIWordpress extends NPRAPI {
 		}
 		$use_npr_layout = ( !empty( get_option( 'dp_npr_query_use_layout' ) ) ? TRUE : FALSE );
 		$use_npr_featured = ( !empty( get_option( 'dp_npr_query_use_featured' ) ) ? TRUE : FALSE );
-		
+
 		$post_id = null;
 
 		if ( !empty( $this->stories ) ) {

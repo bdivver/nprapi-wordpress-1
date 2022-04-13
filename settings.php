@@ -206,7 +206,7 @@ function nprstory_query_use_featured_callback() {
 		$check_box_string .= ' checked="checked" ';
 	}
 	$check_box_string .= "/>";
-
+	
 	echo nprstory_esc_html( $check_box_string . "<p>If your theme uses the featured image, checking this box will remove the lead image from imported posts with more complex HTML to render</p>" );
 	wp_nonce_field( 'nprstory_nonce_ds_npr_query_use_feature', 'nprstory_nonce_ds_npr_query_use_feature_name', true, true );
 }
