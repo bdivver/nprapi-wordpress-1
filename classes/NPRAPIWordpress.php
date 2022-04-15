@@ -149,7 +149,7 @@ class NPRAPIWordpress extends NPRAPI {
 				// if option is not checked, return the text with HTML
 				$npr_layout = $this->get_body_with_layout( $story, $use_npr_layout );
 				if ( !empty( $npr_layout['body'] ) ) {
-					$story->body = $use_npr_featured.$npr_layout['body'];
+					$story->body = $npr_layout['body'];
 
 					//if remove lead image true.  Using Featured image instead
 					if ($use_npr_featured === TRUE){
