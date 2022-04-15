@@ -149,11 +149,13 @@ class NPRAPIWordpress extends NPRAPI {
 				// if option is not checked, return the text with HTML
 				$npr_layout = $this->get_body_with_layout( $story, $use_npr_layout );
 				if ( !empty( $npr_layout['body'] ) ) {
-					$story->body = $npr_layout['body'];
+					$story->body = $use_npr_featured.$npr_layout['body'];
 
 					//if remove lead image true.  Using Featured image instead
-					if ($use_npr_featured == TRUE){
-						preg_replace("/<img[^>]+\>/i", "", $story->body, 1);
+					if ($use_npr_featured === TRUE){
+						$story->body = preg_replace("/<img[^>]+\>/i", "", $story->body, 1);
+						$story->body = preg_replace( "/(<figure.*?>)(.*?)(<\/figure>)/" , '' , $story->body, 1);
+						$story->body = preg_replace("/<!--.*?-->/","",$story->body,2);
 					}
 					
 					$npr_has_layout = $npr_layout['has_layout'];
@@ -614,7 +616,13 @@ class NPRAPIWordpress extends NPRAPI {
 		}
 		return null;
 	}
-
+	function removeFirstImage($content){
+		$content = preg_replace("/<img[^>]+\>/i", "", $content, 1);
+		$content = preg_replace( "/(<figure.*?>)(.*?)(<\/figure>)/" , '' , $content, 1);
+		$content = preg_replace("/<!--.*?-->/","",$content,2);
+	   // $content = preg_replace("/<!-- /wp:image -->/","", $content, 1);
+		return $content;
+	}
 	/**
 	 * Create NPRML from wordpress post.
 	 *

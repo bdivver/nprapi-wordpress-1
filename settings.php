@@ -118,7 +118,7 @@ function nprstory_settings_init() {
 	add_settings_field( 'dp_npr_query_use_layout', 'Use rich layout on pulled posts if available', 'nprstory_query_use_layout_callback', 'ds_npr_api_get_multi_settings', 'ds_npr_api_get_multi_settings' );
 	register_setting( 'ds_npr_api_get_multi_settings', 'dp_npr_query_use_layout' , 'nprstory_validation_callback_checkbox');
 
-	add_settings_field( 'dp_npr_query_use_featured', 'Theme uses Featured Image, so remove lead image from rich layout on pulled posts if available', 'nprstory_query_use_layout_callback', 'ds_npr_api_get_multi_settings', 'ds_npr_api_get_multi_settings' );
+	add_settings_field( 'dp_npr_query_use_featured', 'Theme uses Featured Image, so remove lead image from rich layout on pulled posts if available', 'nprstory_query_use_featured_callback', 'ds_npr_api_get_multi_settings', 'ds_npr_api_get_multi_settings' );
 	register_setting( 'ds_npr_api_get_multi_settings', 'dp_npr_query_use_featured' , 'nprstory_validation_callback_checkbox');
 
 	add_settings_field( 'ds_npr_pull_post_type', 'NPR Pull Post Type', 'nprstory_pull_post_type_callback', 'ds_npr_api', 'ds_npr_api_settings' );
@@ -193,10 +193,10 @@ function nprstory_query_use_layout_callback() {
 
 
 function nprstory_query_use_featured_callback() {
-	$use_layout = get_option( 'dp_npr_query_use_feature' );
-	$check_box_string = '<input id="dp_npr_query_use_feature" name="dp_npr_query_use_feature" type="checkbox" value="true"';
+	$use_featured = get_option( 'dp_npr_query_use_featured' );
+	$check_box_string = '<input id="dp_npr_query_use_feature" name="dp_npr_query_use_featured" type="checkbox" value="true"';
 
-	if ( $use_layout ) {
+	if ( $use_featured ) {
 		$check_box_string .= ' checked="checked" ';
 	}
 	$check_box_string .= "/>";
